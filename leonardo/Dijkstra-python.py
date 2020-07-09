@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[ ]:
 
 
 from collections import deque, namedtuple
@@ -90,7 +90,8 @@ class Graph:
                     previous_vertices[neighbour] = current_vertex
 
         path, current_vertex = deque(), dest
-        while previous_vertices[current_vertex] is not None:
+        while previous_vertices[current_vertex] is not None: 
+            time.sleep(2)
             path.appendleft(current_vertex)
             current_vertex = previous_vertices[current_vertex]
         if path:
@@ -109,6 +110,7 @@ class MyServer(BaseHTTPRequestHandler):
         self.send_response(200)
 #         print(parse_qs(urlparse(self.path).query))
         params = parse_qs(urlparse(self.path).query)
+        time.sleep(4)
         self.send_header("Content-type", "json")
         self.end_headers()
         graph = Graph([
@@ -118,6 +120,7 @@ class MyServer(BaseHTTPRequestHandler):
         print(params['inicial'][0])
         print(params['final'][0])
         result = graph.dijkstra(params['inicial'][0], params['final'][0])  
+        time.sleep(3)
         self.wfile.write(bytes(str(result),encoding='utf8'))
 
 myServer = HTTPServer((hostName, hostPort), MyServer)
